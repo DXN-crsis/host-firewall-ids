@@ -12,7 +12,7 @@ import os
 from datetime import datetime
 from pathlib import Path
 from typing import Optional, Dict, Any, List
-from dataclasses import dataclass, asdict
+from dataclasses import dataclass
 from enum import Enum
 import threading
 

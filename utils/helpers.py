@@ -8,7 +8,7 @@ import sys
 import re
 import socket
 from datetime import datetime
-from typing import Optional, Dict, Tuple
+from typing import Optional, Dict
 import psutil
 
 

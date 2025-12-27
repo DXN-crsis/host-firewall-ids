@@ -6,8 +6,7 @@ Handles application settings with JSON persistence.
 import json
 import os
 from dataclasses import dataclass, field, asdict
-from typing import List, Dict, Optional, Any
-from pathlib import Path
+from typing import List, Optional, Any
 import threading
 
 

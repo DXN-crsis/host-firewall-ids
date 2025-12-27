@@ -9,8 +9,7 @@ from PyQt6.QtWidgets import (
     QGroupBox, QMessageBox, QFileDialog, QDateEdit, QComboBox,
     QLineEdit, QCheckBox, QSplitter, QTextEdit, QProgressDialog
 )
-from PyQt6.QtCore import Qt, pyqtSignal, QDate, QThread
-from PyQt6.QtGui import QColor
+from PyQt6.QtCore import Qt, pyqtSignal, QDate
 
 from datetime import datetime, timedelta
 

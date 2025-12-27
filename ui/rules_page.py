@@ -10,7 +10,6 @@ from PyQt6.QtWidgets import (
     QSpinBox, QLineEdit, QFormLayout, QScrollArea, QCheckBox
 )
 from PyQt6.QtCore import Qt, pyqtSignal
-from PyQt6.QtGui import QColor
 
 from .widgets import RulesTable, BlockIPDialog, BlockPortDialog, SearchBar
 

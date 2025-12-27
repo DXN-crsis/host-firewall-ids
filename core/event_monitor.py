@@ -6,7 +6,7 @@ Requires Administrator privileges to access Security logs.
 
 import threading
 from datetime import datetime, timedelta
-from typing import List, Dict, Optional, Callable
+from typing import List, Dict, Optional
 from dataclasses import dataclass
 from PyQt6.QtCore import QObject, pyqtSignal, QThread
 import time
@@ -15,8 +15,6 @@ import time
 try:
     import win32evtlog
     import win32evtlogutil
-    import win32security
-    import win32con
     WIN32_AVAILABLE = True
 except ImportError:
     WIN32_AVAILABLE = False
@@ -133,7 +131,9 @@ class EventLogWorker(QThread):
                         break
 
                     # Check for failed login events
-                    if event.EventID == self.EVENT_FAILED_LOGIN:
+                    # Use bitmask to handle EventID which may have additional flags
+                    event_id = event.EventID & 0xFFFF
+                    if event_id == self.EVENT_FAILED_LOGIN:
                         login_info = self._parse_failed_login(event)
                         if login_info:
                             failed_logins.append(login_info)
@@ -153,7 +153,7 @@ class EventLogWorker(QThread):
 
             # Parse important fields from the message
             info = {
-                'event_id': event.EventID,
+                'event_id': event.EventID & 0xFFFF,
                 'time': datetime(
                     event.TimeGenerated.year,
                     event.TimeGenerated.month,

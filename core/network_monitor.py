@@ -7,7 +7,7 @@ Maps PIDs to process names and provides real-time connection data.
 import psutil
 import socket
 from dataclasses import dataclass, field
-from typing import List, Dict, Optional, Callable
+from typing import List, Dict, Optional
 from datetime import datetime
 from PyQt6.QtCore import QObject, pyqtSignal, QThread, QMutex
 import time

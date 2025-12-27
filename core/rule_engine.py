@@ -6,12 +6,11 @@ Analyzes connection patterns and generates security alerts.
 
 from dataclasses import dataclass, field
 from datetime import datetime, timedelta
-from typing import List, Dict, Set, Optional, Callable
+from typing import List, Dict, Set, Optional
 from enum import Enum
 from collections import defaultdict
 import threading
 from PyQt6.QtCore import QObject, pyqtSignal
-import json
 
 
 class AlertSeverity(Enum):

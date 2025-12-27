@@ -6,10 +6,9 @@ Main view showing real-time network connections and statistics.
 from PyQt6.QtWidgets import (
     QWidget, QVBoxLayout, QHBoxLayout, QLabel, QFrame,
     QPushButton, QTableWidget, QTableWidgetItem, QHeaderView,
-    QSplitter, QGroupBox, QScrollArea, QMessageBox
+    QSplitter, QGroupBox, QMessageBox
 )
-from PyQt6.QtCore import Qt, pyqtSignal, QTimer
-from PyQt6.QtGui import QColor
+from PyQt6.QtCore import Qt, pyqtSignal
 
 from .widgets import StatCard, ConnectionTable, SearchBar, BlockIPDialog
 
