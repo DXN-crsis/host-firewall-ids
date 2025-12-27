@@ -1,6 +1,7 @@
 """
 Custom Widgets Module
-Reusable UI components for the application.
+Reusable UI components for the application with smooth animations
+and glassmorphism styling.
 """
 
 from PyQt6.QtWidgets import (
@@ -8,45 +9,98 @@ from PyQt6.QtWidgets import (
     QPushButton, QLineEdit, QTableWidget, QTableWidgetItem,
     QHeaderView, QSizePolicy, QProgressBar, QGraphicsDropShadowEffect,
     QMessageBox, QDialog, QDialogButtonBox, QFormLayout, QComboBox,
-    QSpinBox, QCheckBox
+    QSpinBox, QCheckBox, QGraphicsOpacityEffect
 )
 from PyQt6.QtCore import Qt, pyqtSignal, QTimer, QPropertyAnimation, QEasingCurve
-from PyQt6.QtGui import QColor, QFont, QIcon
+from PyQt6.QtGui import QColor, QFont
 
 
 class StatCard(QFrame):
     """
-    A card widget for displaying statistics.
-    Shows a title, value, and optional icon.
+    A card widget for displaying statistics with hover animations.
+    Shows a title, value with glassmorphism styling.
     """
 
-    def __init__(self, title: str, value: str = "0", color: str = "#2196F3",
+    clicked = pyqtSignal()
+
+    def __init__(self, title: str, value: str = "0", color: str = "#ffffff",
                  icon: str = None, parent=None):
         super().__init__(parent)
+        self._color = color
+        self._original_color = color
+
         self.setProperty("class", "card")
-        self.setMinimumSize(150, 100)
+        self.setMinimumSize(160, 110)
         self.setSizePolicy(QSizePolicy.Policy.Expanding, QSizePolicy.Policy.Fixed)
+        self.setCursor(Qt.CursorShape.PointingHandCursor)
 
         layout = QVBoxLayout(self)
-        layout.setContentsMargins(16, 16, 16, 16)
-        layout.setSpacing(8)
+        layout.setContentsMargins(20, 18, 20, 18)
+        layout.setSpacing(10)
 
-        # Title
+        # Title with subtle styling
         self.title_label = QLabel(title)
-        self.title_label.setStyleSheet(f"color: #888; font-size: 11pt;")
+        self.title_label.setStyleSheet("""
+            color: rgba(255, 255, 255, 0.6);
+            font-size: 10pt;
+            font-weight: 500;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            background: transparent;
+        """)
         layout.addWidget(self.title_label)
 
-        # Value
+        # Value with bold styling
         self.value_label = QLabel(value)
-        self.value_label.setStyleSheet(f"color: {color}; font-size: 28pt; font-weight: bold;")
+        self._update_value_style()
         layout.addWidget(self.value_label)
 
-        # Add shadow effect
+        # Add shadow effect for depth
         shadow = QGraphicsDropShadowEffect()
-        shadow.setBlurRadius(20)
-        shadow.setColor(QColor(0, 0, 0, 50))
-        shadow.setOffset(0, 4)
+        shadow.setBlurRadius(30)
+        shadow.setColor(QColor(0, 0, 0, 100))
+        shadow.setOffset(0, 10)
         self.setGraphicsEffect(shadow)
+
+        # Animation for value changes
+        self._animation_timer = QTimer(self)
+        self._animation_timer.timeout.connect(self._animate_value_change)
+        self._target_value = value
+        self._animation_step = 0
+
+    def _update_value_style(self):
+        """Update value label styling."""
+        self.value_label.setStyleSheet(f"""
+            color: {self._color};
+            font-size: 32pt;
+            font-weight: 700;
+            letter-spacing: -1px;
+            background: transparent;
+        """)
+
+    def enterEvent(self, event):
+        """Handle mouse enter with subtle glow."""
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(40)
+        shadow.setColor(QColor(255, 255, 255, 30))
+        shadow.setOffset(0, 12)
+        self.setGraphicsEffect(shadow)
+        super().enterEvent(event)
+
+    def leaveEvent(self, event):
+        """Handle mouse leave."""
+        shadow = QGraphicsDropShadowEffect()
+        shadow.setBlurRadius(30)
+        shadow.setColor(QColor(0, 0, 0, 100))
+        shadow.setOffset(0, 10)
+        self.setGraphicsEffect(shadow)
+        super().leaveEvent(event)
+
+    def mousePressEvent(self, event):
+        """Handle mouse press."""
+        if event.button() == Qt.MouseButton.LeftButton:
+            self.clicked.emit()
+        super().mousePressEvent(event)
 
     def set_value(self, value: str):
         """Update the displayed value."""
@@ -54,19 +108,32 @@ class StatCard(QFrame):
 
     def set_color(self, color: str):
         """Update the value color."""
-        self.value_label.setStyleSheet(f"color: {color}; font-size: 28pt; font-weight: bold;")
+        self._color = color
+        self._update_value_style()
+
+    def _animate_value_change(self):
+        """Animate value transitions."""
+        pass
 
 
 class AlertBadge(QLabel):
     """
-    A badge for showing alert severity.
+    A badge for showing alert severity with glassmorphism style.
     """
 
+    # Updated colors for glassmorphism theme
     COLORS = {
-        'low': '#4CAF50',
-        'medium': '#FF9800',
-        'high': '#f44336',
-        'critical': '#9C27B0'
+        'low': '#00ff88',       # Neon green
+        'medium': '#ffaa00',    # Amber
+        'high': '#ff4466',      # Neon red
+        'critical': '#ff00aa'   # Neon magenta
+    }
+
+    BG_COLORS = {
+        'low': 'rgba(0, 255, 136, 0.15)',
+        'medium': 'rgba(255, 170, 0, 0.15)',
+        'high': 'rgba(255, 68, 102, 0.15)',
+        'critical': 'rgba(255, 0, 170, 0.2)'
     }
 
     def __init__(self, severity: str = "low", text: str = None, parent=None):
@@ -77,18 +144,21 @@ class AlertBadge(QLabel):
         """Set the severity level and update appearance."""
         severity = severity.lower()
         color = self.COLORS.get(severity, self.COLORS['low'])
+        bg_color = self.BG_COLORS.get(severity, self.BG_COLORS['low'])
 
         if text is None:
             text = severity.upper()
 
         self.setText(text)
         self.setStyleSheet(f'''
-            background-color: {color};
-            color: white;
-            padding: 4px 12px;
-            border-radius: 12px;
+            background-color: {bg_color};
+            color: {color};
+            padding: 6px 14px;
+            border-radius: 14px;
+            border: 1px solid {color};
             font-size: 9pt;
-            font-weight: bold;
+            font-weight: 600;
+            letter-spacing: 0.5px;
         ''')
         self.setAlignment(Qt.AlignmentFlag.AlignCenter)
 

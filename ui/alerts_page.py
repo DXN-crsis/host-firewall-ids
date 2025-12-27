@@ -9,6 +9,7 @@ from PyQt6.QtWidgets import (
     QGroupBox, QMessageBox, QSplitter, QTextEdit
 )
 from PyQt6.QtCore import Qt, pyqtSignal
+from PyQt6.QtGui import QColor
 
 from .widgets import AlertsList, SearchBar
 

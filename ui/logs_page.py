@@ -10,6 +10,7 @@ from PyQt6.QtWidgets import (
     QLineEdit, QCheckBox, QSplitter, QTextEdit, QProgressDialog
 )
 from PyQt6.QtCore import Qt, pyqtSignal, QDate
+from PyQt6.QtGui import QColor
 
 from datetime import datetime, timedelta
 
