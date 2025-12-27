@@ -1,0 +1,15 @@
+# SaadFirewall - Smart Host Firewall + IDS
+# Python Dependencies
+
+# GUI Framework
+PyQt6>=6.4.0
+
+# System Utilities
+psutil>=5.9.0
+
+# Windows-specific (optional, for event log monitoring)
+# Install separately on Windows: pip install pywin32
+# pywin32>=305
+
+# For better JSON handling (optional)
+# orjson>=3.8.0
