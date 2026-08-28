@@ -9,9 +9,9 @@ rule engine, live connection monitoring, and a PyQt dashboard.
 <img src="https://img.shields.io/badge/PyQt6-41CD52?style=for-the-badge&logo=qt&logoColor=white" />
 <img src="https://img.shields.io/badge/Windows-0078D6?style=for-the-badge&logo=windows&logoColor=white" />
 
-<img src="https://img.shields.io/github/languages/top/romeo2badboy-rgb/Fire-wall?style=flat-square&color=3776AB" />
-<img src="https://img.shields.io/github/repo-size/romeo2badboy-rgb/Fire-wall?style=flat-square" />
-<img src="https://img.shields.io/github/last-commit/romeo2badboy-rgb/Fire-wall?style=flat-square" />
+<img src="https://img.shields.io/github/languages/top/romeo2badboy-rgb/host-firewall-ids?style=flat-square&color=3776AB" />
+<img src="https://img.shields.io/github/repo-size/romeo2badboy-rgb/host-firewall-ids?style=flat-square" />
+<img src="https://img.shields.io/github/last-commit/romeo2badboy-rgb/host-firewall-ids?style=flat-square" />
 
 </div>
 
